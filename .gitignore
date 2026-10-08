@@ -1,0 +1,18 @@
+# dependencies and build output
+node_modules
+.next
+out
+next-env.d.ts
+*.tsbuildinfo
+
+# local env (the ticket URL default lives in lib/site.ts; see .env.example)
+.env.local
+
+# design inputs and references (not needed to run the site)
+Assets/
+Refrences/
+
+# local tooling and OS files
+.claude/
+.DS_Store
+*.log

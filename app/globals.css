@@ -1,0 +1,192 @@
+@import "tailwindcss";
+@import "lenis/dist/lenis.css";
+
+/* Palette from the KKK and Spill The Word Fest logos plus Assets/main-design. One bright theme. */
+@theme {
+  --color-sun: #ffc918;
+  --color-sun-light: #ffdb5c;
+  --color-sun-deep: #f5b400;
+  --color-cream: #fff6dc;
+  --color-sand: #efd9a7;
+  --color-ink: #111111;
+  --color-marigold: #ff8a00;
+  --color-rose: #ff5d8f;
+  --color-rose-light: #ffe1ea;
+  --color-teal: #1fa6a0;
+  --color-teal-deep: #14807b;
+
+  --font-display: var(--font-palanquin-dark), ui-sans-serif, system-ui, sans-serif;
+  --font-body: var(--font-palanquin), ui-sans-serif, system-ui, sans-serif;
+  --font-hindi: var(--font-hind), var(--font-palanquin), sans-serif;
+
+  /* Radius rule: CTAs are full pill, frames and panels are 24px. */
+  --radius-panel: 24px;
+}
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  background: var(--color-sun);
+}
+
+body {
+  background: var(--color-cream);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--color-ink);
+  color: var(--color-sun);
+}
+
+/* Visible focus on every interactive element. */
+:where(a, button, [tabindex]):focus-visible {
+  outline: 3px solid var(--color-ink);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 6px var(--color-cream);
+  border-radius: 999px;
+}
+
+[lang="hi"] {
+  font-family: var(--font-hindi);
+}
+
+/* Tactile push on CTAs. */
+.kkk-press {
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.kkk-press:hover {
+  transform: translateY(-2px) rotate(-1deg);
+}
+.kkk-press:active {
+  transform: translateY(1px) scale(0.98);
+}
+
+/* Layered paper-cut tag shadow, tinted warm. */
+.kkk-paper-shadow {
+  filter: drop-shadow(0 6px 0 rgb(138 83 0 / 0.18)) drop-shadow(0 14px 18px rgb(138 83 0 / 0.14));
+}
+
+/* Hide the mobile nav CTA once the sticky bottom bar is showing. */
+html[data-ticket-bar="on"] .kkk-nav-cta {
+  @media (width < 768px) {
+    display: none;
+  }
+}
+
+/* Hero portrait recomposition: the scene sits in the upper part, text below it. */
+.kkk-scene-box {
+  position: absolute;
+  inset: 0;
+}
+@media (orientation: portrait) {
+  .kkk-scene-box {
+    bottom: 30%;
+  }
+}
+
+/* Scroll-reveal helpers (armed only by JS, so content is visible without it). */
+[data-armed] {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: calc(var(--i, 0) * 90ms);
+}
+[data-armed].is-in {
+  opacity: 1;
+  transform: none;
+}
+[data-armed="drop"] {
+  transform: translateY(-60px);
+}
+
+/* ---------- Ambient loops (only when motion is welcome) ---------- */
+@media (prefers-reduced-motion: no-preference) {
+  .kkk-spin-slow {
+    animation: kkk-spin 160s linear infinite;
+  }
+  .kkk-sway {
+    transform-box: view-box;
+    transform-origin: 0 0;
+    animation: kkk-sway 4.2s ease-in-out infinite;
+  }
+  .kkk-drift-a {
+    animation: kkk-drift-a 9s ease-in-out infinite;
+  }
+  .kkk-drift-b {
+    animation: kkk-drift-b 12s ease-in-out infinite;
+  }
+  .kkk-breeze {
+    transform-origin: 50% 0;
+    animation: kkk-breeze 5s ease-in-out infinite;
+  }
+  .kkk-bob {
+    animation: kkk-bob 3.4s ease-in-out infinite;
+  }
+  .kkk-sweep {
+    animation: kkk-sweep 9s ease-in-out infinite;
+  }
+  .kkk-marquee {
+    animation: kkk-marquee 48s linear infinite;
+  }
+  /* Artist strip: two identical copies, each card carries its own right margin, so -50% is exactly one copy. */
+  .kkk-artists {
+    animation: kkk-marquee 60s linear infinite;
+  }
+  .kkk-pin-bob {
+    transform-box: fill-box;
+    animation: kkk-bob 3s ease-in-out infinite;
+  }
+}
+
+@keyframes kkk-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes kkk-sway {
+  0%, 100% { transform: rotate(-4deg); }
+  50% { transform: rotate(4deg); }
+}
+@keyframes kkk-drift-a {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(14px, -10px); }
+}
+@keyframes kkk-drift-b {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(-16px, 8px); }
+}
+@keyframes kkk-breeze {
+  0%, 100% { transform: rotate(-0.5deg) translateY(0); }
+  50% { transform: rotate(0.5deg) translateY(4px); }
+}
+@keyframes kkk-bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+@keyframes kkk-sweep {
+  0%, 100% { transform: rotate(-14deg); }
+  50% { transform: rotate(14deg); }
+}
+@keyframes kkk-marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  [data-armed] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
