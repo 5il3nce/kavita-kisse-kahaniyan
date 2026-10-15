@@ -14,9 +14,28 @@ export function Countdown() {
   const [now, setNow] = useState<number | null>(null);
 
   useEffect(() => {
-    setNow(Date.now());
-    const id = window.setInterval(() => setNow(Date.now()), 1000);
-    return () => window.clearInterval(id);
+    // Ticks land on each wall-clock second, so the display never drifts. Hidden tabs get their timers
+    // throttled (up to once a minute in Chrome), so the loop stops while hidden and resyncs on return.
+    let id: number | undefined;
+    const tick = () => {
+      const t = Date.now();
+      setNow(t);
+      id = window.setTimeout(tick, 1000 - (t % 1000));
+    };
+    const stop = () => {
+      if (id !== undefined) window.clearTimeout(id);
+      id = undefined;
+    };
+    const onVisibility = () => {
+      stop();
+      if (!document.hidden) tick();
+    };
+    tick();
+    document.addEventListener("visibilitychange", onVisibility);
+    return () => {
+      document.removeEventListener("visibilitychange", onVisibility);
+      stop();
+    };
   }, []);
 
   if (now !== null && now >= FEST_START_MS) {

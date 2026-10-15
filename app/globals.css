@@ -90,10 +90,12 @@ html[data-ticket-bar="on"] .kkk-nav-cta {
   }
 }
 
-/* Scroll-reveal helpers (armed only by JS, so content is visible without it). */
+/* Scroll-reveal helpers (armed only by JS, so content is visible without it).
+   will-change lives only as long as data-armed: RevealGroup removes the attribute after the reveal. */
 [data-armed] {
   opacity: 0;
   transform: translateY(28px);
+  will-change: opacity, transform;
   transition:
     opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
     transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);

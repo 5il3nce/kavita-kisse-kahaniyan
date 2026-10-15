@@ -16,13 +16,18 @@ export function CountUp({ value, suffix = "" }: { value: number; suffix?: string
     loadGsap().then(({ gsap }) => {
       if (dead) return;
       ctx = gsap.context(() => {
+        let shown = 0;
         el.textContent = `0${suffix}`;
         gsap.to(state, {
           n: value,
           duration: value > 50 ? 1.8 : 1.2,
           ease: "power2.out",
           onUpdate: () => {
-            el.textContent = `${Math.round(state.n)}${suffix}`;
+            // Touch the DOM only when the visible number changes, not on every frame.
+            const n = Math.round(state.n);
+            if (n === shown) return;
+            shown = n;
+            el.textContent = `${n}${suffix}`;
           },
           scrollTrigger: { trigger: el, start: "top 85%", once: true },
         });

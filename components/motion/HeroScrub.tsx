@@ -21,10 +21,13 @@ export function HeroScrub() {
       if (dead) return;
       ctx = gsap.context(() => {
         const q = gsap.utils.selector(el);
-        const stage = q("[data-stage]")[0] as HTMLElement;
-        const box = q("[data-scene-box]")[0] as HTMLElement;
-        const copy = q("[data-copy]")[0] as HTMLElement;
-        const logoWrap = q("[data-logo-wrap]")[0] as HTMLElement;
+        const stage = el.querySelector<HTMLElement>("[data-stage]");
+        const box = el.querySelector<HTMLElement>("[data-scene-box]");
+        const copy = el.querySelector<HTMLElement>("[data-copy]");
+        const logoWrap = el.querySelector<HTMLElement>("[data-logo-wrap]");
+        // The function-based values below re-read these on every refresh. If the markup changes
+        // and a hook goes missing, skip the scrub and leave the static hero rather than throw.
+        if (!stage || !box || !copy || !logoWrap) return;
 
         // Map a scene point to pixels inside the scene box (viewBox 1600x1000, xMidYMax slice).
         const map = (x: number, y: number) => {
@@ -67,12 +70,12 @@ export function HeroScrub() {
           .fromTo(q(".kkk-burst"), { scale: 0.15, opacity: 0 }, { scale: 1.25, opacity: 0.75, duration: 3.2, ease: "power2.out" }, 2.6);
 
         // Petals, stars and confetti float out of the doorway.
-        q(".kkk-particle").forEach((p, i) => {
-          const d = (p as HTMLElement).dataset;
+        gsap.utils.toArray<SVGElement>(".kkk-particle", el).forEach((p, i) => {
+          const d = p.dataset;
           tl.fromTo(
             p,
             { x: 800, y: 690, scale: 0.2, rotation: 0, opacity: 0 },
-            { x: 800 + Number(d.tx), y: 690 + Number(d.ty), scale: 1, rotation: Number(d.rot), opacity: 1, duration: 3.4, ease: "power1.out" },
+            { x: 800 + (Number(d.tx) || 0), y: 690 + (Number(d.ty) || 0), scale: 1, rotation: Number(d.rot) || 0, opacity: 1, duration: 3.4, ease: "power1.out" },
             2.8 + (i % 12) * 0.08,
           );
         });
@@ -97,6 +100,20 @@ export function HeroScrub() {
           return;
         }
 
+        // GPU hints, applied only while the hero is scrubbing and dropped at rest so the browser
+        // re-rasters everything crisp. The zooming layers are cached as textures. The logo and glow are
+        // promoted too: the logo cross-fades out of a CSS-blurred copy, and fading a filtered element
+        // without its own layer repaints the blur on every frame.
+        const layers = gsap.utils.toArray<HTMLElement>("[data-layer]", el);
+        const faders = gsap.utils.toArray<HTMLElement>("[data-logo], [data-logo-blur], [data-logo-sharp], [data-glow]", el);
+        let hinted = false;
+        const hint = (on: boolean) => {
+          if (on === hinted) return;
+          hinted = on;
+          layers.forEach((l) => (l.style.willChange = on ? "transform" : ""));
+          faders.forEach((f) => (f.style.willChange = on ? "transform, opacity" : ""));
+        };
+
         const st = ScrollTrigger.create({
           trigger: el,
           start: "top top",
@@ -104,19 +121,23 @@ export function HeroScrub() {
           scrub: 0.5,
           animation: tl,
           invalidateOnRefresh: true,
+          // Promote on entry as well as on scrollStart. The isScrolling check keeps a page restored
+          // mid-hero (no scroll yet, so no scrollEnd to drop the hint) from sitting on blurry layers.
+          onToggle: (self) => hint(self.isActive && ScrollTrigger.isScrolling()),
         });
 
-        // Cache the zooming layers as GPU textures only while scrolling through the hero (smooth),
-        // then drop the hint so the browser re-rasters them crisp at rest.
-        const layers = q("[data-layer]") as HTMLElement[];
-        const hint = (v: string) => layers.forEach((l) => (l.style.willChange = v));
-        const onStart = () => st.isActive && hint("transform");
-        const onEnd = () => hint("");
+        const onStart = () => hint(st.isActive);
+        const onEnd = () => hint(false);
+        // A hidden tab should not hold large layer textures in GPU memory.
+        const onVisibility = () => document.hidden && hint(false);
         ScrollTrigger.addEventListener("scrollStart", onStart);
         ScrollTrigger.addEventListener("scrollEnd", onEnd);
+        document.addEventListener("visibilitychange", onVisibility);
         return () => {
           ScrollTrigger.removeEventListener("scrollStart", onStart);
           ScrollTrigger.removeEventListener("scrollEnd", onEnd);
+          document.removeEventListener("visibilitychange", onVisibility);
+          hint(false);
         };
       }, el);
     });
