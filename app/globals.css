@@ -109,43 +109,41 @@ html[data-ticket-bar="on"] .kkk-nav-cta {
   transform: translateY(-60px);
 }
 
-/* ---------- Ambient loops (only when motion is welcome) ---------- */
-@media (prefers-reduced-motion: no-preference) {
-  .kkk-spin-slow {
-    animation: kkk-spin 160s linear infinite;
-  }
-  .kkk-sway {
-    transform-box: view-box;
-    transform-origin: 0 0;
-    animation: kkk-sway 4.2s ease-in-out infinite;
-  }
-  .kkk-drift-a {
-    animation: kkk-drift-a 9s ease-in-out infinite;
-  }
-  .kkk-drift-b {
-    animation: kkk-drift-b 12s ease-in-out infinite;
-  }
-  .kkk-breeze {
-    transform-origin: 50% 0;
-    animation: kkk-breeze 5s ease-in-out infinite;
-  }
-  .kkk-bob {
-    animation: kkk-bob 3.4s ease-in-out infinite;
-  }
-  .kkk-sweep {
-    animation: kkk-sweep 9s ease-in-out infinite;
-  }
-  .kkk-marquee {
-    animation: kkk-marquee 48s linear infinite;
-  }
-  /* Artist strip: two identical copies, each card carries its own right margin, so -50% is exactly one copy. */
-  .kkk-artists {
-    animation: kkk-marquee 60s linear infinite;
-  }
-  .kkk-pin-bob {
-    transform-box: fill-box;
-    animation: kkk-bob 3s ease-in-out infinite;
-  }
+/* ---------- Ambient loops (run for every visitor, whatever their OS motion setting) ---------- */
+.kkk-spin-slow {
+  animation: kkk-spin 160s linear infinite;
+}
+.kkk-sway {
+  transform-box: view-box;
+  transform-origin: 0 0;
+  animation: kkk-sway 4.2s ease-in-out infinite;
+}
+.kkk-drift-a {
+  animation: kkk-drift-a 9s ease-in-out infinite;
+}
+.kkk-drift-b {
+  animation: kkk-drift-b 12s ease-in-out infinite;
+}
+.kkk-breeze {
+  transform-origin: 50% 0;
+  animation: kkk-breeze 5s ease-in-out infinite;
+}
+.kkk-bob {
+  animation: kkk-bob 3.4s ease-in-out infinite;
+}
+.kkk-sweep {
+  animation: kkk-sweep 9s ease-in-out infinite;
+}
+.kkk-marquee {
+  animation: kkk-marquee 48s linear infinite;
+}
+/* Artist strip: two identical copies, each card carries its own right margin, so -50% is exactly one copy. */
+.kkk-artists {
+  animation: kkk-marquee 60s linear infinite;
+}
+.kkk-pin-bob {
+  transform-box: fill-box;
+  animation: kkk-bob 3s ease-in-out infinite;
 }
 
 @keyframes kkk-spin {
@@ -180,15 +178,5 @@ html[data-ticket-bar="on"] .kkk-nav-cta {
 @keyframes kkk-marquee {
   to {
     transform: translateX(-50%);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-  [data-armed] {
-    opacity: 1 !important;
-    transform: none !important;
   }
 }

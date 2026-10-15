@@ -9,7 +9,7 @@ export function WordReveal({ text, className }: { text: string; className?: stri
 
   useEffect(() => {
     const el = ref.current;
-    if (!el || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (!el) return;
     let ctx: Revertable | undefined;
     let dead = false;
     loadGsap().then(({ gsap }) => {

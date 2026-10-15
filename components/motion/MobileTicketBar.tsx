@@ -22,7 +22,7 @@ export function MobileTicketBar() {
 
   return (
     <div
-      className={`fixed inset-x-3 bottom-3 z-40 flex items-center justify-between gap-3 rounded-full border-2 border-ink bg-sun py-2 pl-5 pr-2 transition-[transform,opacity] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] motion-reduce:transition-none md:hidden ${
+      className={`fixed inset-x-3 bottom-3 z-40 flex items-center justify-between gap-3 rounded-full border-2 border-ink bg-sun py-2 pl-5 pr-2 transition-[transform,opacity] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] md:hidden ${
         show ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-[140%] opacity-0"
       }`}
       aria-hidden={!show}

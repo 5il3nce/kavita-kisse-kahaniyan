@@ -7,13 +7,12 @@ import { loadGsap, type Revertable } from "./loadGsap";
  * Drives the server-rendered hero (#top). The scene markup is not hydrated, only this effect runs.
  * The tagline, subtext and ticket CTA are visible on first paint over the closed gate; the scrub
  * opens the doors, the KKK logo resolves in the light, and the same copy re-settles under it.
- * Reduced motion jumps straight to the open-gate final state.
+ * It runs for every visitor, including those with an OS reduced-motion or performance setting.
  */
 export function HeroScrub() {
   useEffect(() => {
     const el = document.getElementById("top");
     if (!el) return;
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     let ctx: Revertable | undefined;
     let dead = false;
@@ -94,11 +93,6 @@ export function HeroScrub() {
           .fromTo(q("[data-cta]"), { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, immediateRender: false }, 10.65)
           .fromTo(q("[data-petals]"), { opacity: 0 }, { opacity: 1, duration: 0.8 }, 10.0)
           .to({}, { duration: 0.15 }, 11.25);
-
-        if (reduce) {
-          tl.progress(1);
-          return;
-        }
 
         // GPU hints, applied only while the hero is scrubbing and dropped at rest so the browser
         // re-rasters everything crisp. The zooming layers are cached as textures. The logo and glow are

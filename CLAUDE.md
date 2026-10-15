@@ -42,7 +42,7 @@ Next.js 16 has breaking changes from older versions. Read the relevant guide in 
 
 **Heavy SVG scenes** (amphitheatre, crowd) load through `components/motion/LazyScenes.tsx`, which uses `next/dynamic` with `ssr: false` inside `LazyMount` (an IntersectionObserver with a 600px margin). The wrapper box reserves the space so layout does not shift.
 
-**Reduced motion:** every motion component checks `prefers-reduced-motion` and falls back to the final static state. The hero section uses `motion-reduce:h-auto`, and Lenis does not start. New motion must do the same.
+**Reduced motion is deliberately ignored.** The client chose full motion for every visitor, because Windows performance mode and similar settings report `prefers-reduced-motion: reduce` and made the site look static. Do not add `prefers-reduced-motion` checks, `motion-reduce:` or `motion-safe:` variants, or static fallbacks unless asked.
 
 **Illustrations are hand-built SVG** in `components/art/`, in a flat, paper-cut, risograph style:
 - `SvgDefs` (rendered once in `app/layout.tsx`) defines shared filters and patterns that any inline SVG can reference by id (`#kkk-paper`, `#kkk-paper-lg`, `#kkk-jaali`, `#kkk-jaali-teal`, and others).

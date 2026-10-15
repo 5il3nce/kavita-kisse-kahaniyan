@@ -4,14 +4,14 @@ import { useEffect, useRef, type ReactNode } from "react";
 
 /**
  * Arms children marked with data-reveal and shows them as they enter the viewport.
- * Content stays visible without JS or under reduced motion.
+ * Content stays visible without JS.
  */
 export function RevealGroup({ children, className }: { children: ReactNode; className?: string }) {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const root = ref.current;
-    if (!root || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (!root) return;
     const items = Array.from(root.querySelectorAll<HTMLElement>("[data-reveal]"));
     items.forEach((el) => el.setAttribute("data-armed", el.dataset.reveal || ""));
     const armed = new Set<HTMLElement>(items);

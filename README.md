@@ -47,5 +47,5 @@ public/               logos, artist photos, brand logos, Open Graph image
 
 ## Notes
 
-- Animations respect the visitor's reduced-motion setting: the hero shows its final open-gate frame and loops stop.
+- Animations run for every visitor. They deliberately ignore the OS reduced-motion setting, which Windows also turns on in its performance mode, so the site never shows up static.
 - Deploys as a static page on any Next.js host (for example Vercel) with no extra configuration.

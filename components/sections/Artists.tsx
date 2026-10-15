@@ -16,7 +16,7 @@ const archFront = scallopArchPath(160, 430, 296, 390, 4);
 function ArtistCard({ artist, index, copy }: { artist: Artist; index: number; copy?: boolean }) {
   const f = FRAME[artist.frame];
   return (
-    <li aria-hidden={copy || undefined} className={`relative mr-6 w-[70vw] max-w-[300px] shrink-0 sm:w-[290px] md:mr-10 ${TILT[index % TILT.length]} ${copy ? "motion-reduce:hidden" : ""}`}>
+    <li aria-hidden={copy || undefined} className={`relative mr-6 w-[70vw] max-w-[300px] shrink-0 sm:w-[290px] md:mr-10 ${TILT[index % TILT.length]}`}>
       <figure className="group relative aspect-[320/440]">
         <svg viewBox="0 0 320 440" aria-hidden="true" className="absolute inset-0 h-full w-full">
           <path d={archFront} fill={f.back} transform="translate(10 8)" />
@@ -41,7 +41,6 @@ function ArtistCard({ artist, index, copy }: { artist: Artist; index: number; co
 /**
  * Layout family: continuously cycling strip. The list is rendered twice and the track slides by
  * exactly one copy (CSS, compositor-only), so the loop is seamless and never stops.
- * Under reduced motion it stays still and becomes a normal swipeable row.
  */
 export function Artists() {
   return (
@@ -54,7 +53,7 @@ export function Artists() {
         </h2>
       </div>
 
-      <div className="mt-12 overflow-hidden pb-10 pt-8 motion-reduce:overflow-x-auto md:mt-16">
+      <div className="mt-12 overflow-hidden pb-10 pt-8 md:mt-16">
         <ul role="list" aria-label={artistsCopy.regionLabel} className="kkk-artists ml-4 flex w-max md:ml-8">
           {artists.map((a, i) => (
             <ArtistCard key={a.id} artist={a} index={i} />

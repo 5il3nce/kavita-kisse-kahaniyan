@@ -9,7 +9,7 @@ export function CountUp({ value, suffix = "" }: { value: number; suffix?: string
 
   useEffect(() => {
     const el = ref.current;
-    if (!el || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (!el) return;
     const state = { n: 0 };
     let ctx: Revertable | undefined;
     let dead = false;

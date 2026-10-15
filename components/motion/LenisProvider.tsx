@@ -6,7 +6,6 @@ import { loadGsap } from "./loadGsap";
 /** One Lenis instance for the page, driven by GSAP's ticker and feeding ScrollTrigger. */
 export function LenisProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     let dead = false;
     let cleanup = () => {};
 

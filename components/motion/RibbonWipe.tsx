@@ -13,7 +13,7 @@ export function RibbonWipe({ fill }: { fill: string }) {
 
   useEffect(() => {
     const el = ref.current;
-    if (!el || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (!el) return;
     let ctx: Revertable | undefined;
     let dead = false;
     loadGsap().then(({ gsap }) => {

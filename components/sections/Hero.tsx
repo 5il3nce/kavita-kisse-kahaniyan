@@ -14,7 +14,7 @@ const PETALS: [string, string, string, "petal" | "star"][] = [
 /** Layout family: pinned scroll-scrubbed scene (320vh with a sticky full-screen stage; the logo reveal gets the longest stretch). */
 export function Hero() {
   return (
-    <section id="top" aria-labelledby="hero-title" className="relative h-[320vh] bg-sun motion-reduce:h-auto">
+    <section id="top" aria-labelledby="hero-title" className="relative h-[320vh] bg-sun">
       <HeroScrub />
       <div data-stage className="sticky top-0 h-[100dvh] min-h-[560px] overflow-hidden bg-cream">
         <div data-scene-box className="kkk-scene-box" role="img" aria-label={hero.sceneLabel}>
