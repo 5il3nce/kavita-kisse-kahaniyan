@@ -36,7 +36,7 @@ Next.js 16 has breaking changes from older versions. Read the relevant guide in 
 - `LenisProvider` (in the layout) creates the only Lenis instance, drives it from `gsap.ticker`, and feeds `ScrollTrigger.update`. Its anchor offset (-72) matches the nav height.
 - Never add `window` scroll listeners. Use ScrollTrigger or IntersectionObserver.
 
-**Hero:** `Hero.tsx` is a 320vh section holding a sticky 100dvh stage. `HeroScrub` builds one paused timeline: camera push into the gate, doors open, the KKK logo resolves, and the copy re-settles under it. Scroll drives the timeline. Scene coordinates use the SVG viewBox (1600x1000, `xMidYMax slice`), mapped to pixels by `map()` in `HeroScrub`.
+**Hero:** `Hero.tsx` is a 340vh section holding a sticky 100dvh stage. `HeroScrub` builds one paused timeline: camera push into the gate, doors open, the KKK logo resolves, and the copy re-settles under it. Scroll drives the timeline. Scene coordinates use the SVG viewBox (1600x1000, `xMidYMax slice`), mapped to pixels by `map()` in `HeroScrub`.
 
 **Scroll reveals:** wrap content in `RevealGroup` and mark children with `data-reveal` (optionally `data-reveal="drop"` and similar). The CSS for `[data-armed]` and `.is-in` is in `app/globals.css`. Elements are armed only when JS runs and motion is allowed, so content stays visible without JS.
 

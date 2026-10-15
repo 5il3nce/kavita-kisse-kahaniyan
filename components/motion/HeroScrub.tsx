@@ -85,14 +85,14 @@ export function HeroScrub() {
           .fromTo(q("[data-glow]"), { scale: 0.25, transformOrigin: "50% 100%" }, { scale: 1, transformOrigin: "50% 100%", duration: 1.6, ease: "power3.out" }, 5.5)
           .fromTo(q("[data-glow]"), { opacity: 0 }, { opacity: 1, duration: 0.35 }, 5.5)
           .set(copy, { y: finalCopyY }, 6.7)
-          .fromTo(q("[data-logo]"), { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 2.8, ease: "power2.out" }, 6.7)
-          .fromTo(q("[data-logo-sharp]"), { opacity: 0 }, { opacity: 1, duration: 1.6 }, 7.3)
-          .fromTo(q("[data-logo-blur]"), { opacity: 1 }, { opacity: 0, duration: 1.3 }, 7.9)
-          .fromTo(q("[data-line]"), { opacity: 0, y: 28 }, { opacity: 1, y: 0, duration: 0.8, stagger: 0.35, immediateRender: false, ease: "power2.out" }, 9.6)
-          .fromTo(q("[data-sub]"), { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, immediateRender: false }, 10.4)
-          .fromTo(q("[data-cta]"), { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, immediateRender: false }, 10.65)
-          .fromTo(q("[data-petals]"), { opacity: 0 }, { opacity: 1, duration: 0.8 }, 10.0)
-          .to({}, { duration: 0.15 }, 11.25);
+          .fromTo(q("[data-logo]"), { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 3.6, ease: "power2.out" }, 6.7)
+          .fromTo(q("[data-logo-sharp]"), { opacity: 0 }, { opacity: 1, duration: 2.2 }, 7.5)
+          .fromTo(q("[data-logo-blur]"), { opacity: 1 }, { opacity: 0, duration: 2.0 }, 8.1)
+          .fromTo(q("[data-line]"), { opacity: 0, y: 28 }, { opacity: 1, y: 0, duration: 0.8, stagger: 0.35, immediateRender: false, ease: "power2.out" }, 10.6)
+          .fromTo(q("[data-sub]"), { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, immediateRender: false }, 11.4)
+          .fromTo(q("[data-cta]"), { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, immediateRender: false }, 11.65)
+          .fromTo(q("[data-petals]"), { opacity: 0 }, { opacity: 1, duration: 0.8 }, 11.0)
+          .to({}, { duration: 0.15 }, 12.25);
 
         // GPU hints, applied only while the hero is scrubbing and dropped at rest so the browser
         // re-rasters everything crisp. The zooming layers are cached as textures. The logo and glow are
